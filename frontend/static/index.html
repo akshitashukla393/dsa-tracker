@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Problem Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 DSA Problem Tracker</h1>
+            <p>Track your Data Structures & Algorithms journey with style</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="showTab('add')">➕ Add Problem</button>
+            <button class="nav-tab" onclick="showTab('problems')">📝 Problems</button>
+            <button class="nav-tab" onclick="showTab('github')">🔗 GitHub</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProblems">0</div>
+                    <div class="stat-label">Total Problems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="easyProblems">0</div>
+                    <div class="stat-label">Easy Problems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="mediumProblems">0</div>
+                    <div class="stat-label">Medium Problems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="hardProblems">0</div>
+                    <div class="stat-label">Hard Problems</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📈 Progress Overview</h3>
+                <p>Keep up the great work! Here's your DSA journey at a glance.</p>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Top Categories:</h4>
+                    <div id="categoryStats"></div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Platforms:</h4>
+                    <div id="platformStats"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Problem Tab -->
+        <div id="add" class="tab-content">
+            <div class="card">
+                <h3>➕ Add New Problem</h3>
+                <form id="addProblemForm">
+                    <div class="form-group">
+                        <label for="problemName">Problem Name *</label>
+                        <input type="text" id="problemName" placeholder="e.g., Two Sum, Binary Tree Inorder Traversal" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="platform">Platform *</label>
+                            <select id="platform" required>
+                                <option value="">Select Platform</option>
+                                <option value="LeetCode">LeetCode</option>
+                                <option value="HackerRank">HackerRank</option>
+                                <option value="CodeForces">CodeForces</option>
+                                <option value="GeeksforGeeks">GeeksforGeeks</option>
+                                <option value="InterviewBit">InterviewBit</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty *</label>
+                            <select id="difficulty" required>
+                                <option value="">Select Difficulty</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Array">Array</option>
+                            <option value="String">String</option>
+                            <option value="Linked List">Linked List</option>
+                            <option value="Stack">Stack</option>
+                            <option value="Queue">Queue</option>
+                            <option value="Tree">Tree</option>
+                            <option value="Graph">Graph</option>
+                            <option value="Dynamic Programming">Dynamic Programming</option>
+                            <option value="Backtracking">Backtracking</option>
+                            <option value="Greedy">Greedy</option>
+                            <option value="Binary Search">Binary Search</option>
+                            <option value="Two Pointers">Two Pointers</option>
+                            <option value="Sliding Window">Sliding Window</option>
+                            <option value="Hash Table">Hash Table</option>
+                            <option value="Math">Math</option>
+                            <option value="Bit Manipulation">Bit Manipulation</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea id="notes" rows="3" placeholder="Add any notes about the solution approach, time complexity, etc."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Add Problem</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Problems Tab -->
+        <div id="problems" class="tab-content">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search problems..." oninput="filterProblems()">
+            </div>
+            
+            <div class="filters">
+                <select id="difficultyFilter" class="filter-select" onchange="filterProblems()">
+                    <option value="">All Difficulties</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                
+                <select id="platformFilter" class="filter-select" onchange="filterProblems()">
+                    <option value="">All Platforms</option>
+                    <option value="LeetCode">LeetCode</option>
+                    <option value="HackerRank">HackerRank</option>
+                    <option value="CodeForces">CodeForces</option>
+                    <option value="GeeksforGeeks">GeeksforGeeks</option>
+                    <option value="InterviewBit">InterviewBit</option>
+                    <option value="Other">Other</option>
+                </select>
+                
+                <select id="categoryFilter" class="filter-select" onchange="filterProblems()">
+                    <option value="">All Categories</option>
+                    <option value="Array">Array</option>
+                    <option value="String">String</option>
+                    <option value="Tree">Tree</option>
+                    <option value="Graph">Graph</option>
+                    <option value="Dynamic Programming">Dynamic Programming</option>
+                </select>
+            </div>
+            
+            <div id="problemsList" class="problem-list">
+                <div class="loading">Loading problems...</div>
+            </div>
+        </div>
+
+        <!-- GitHub Tab -->
+        <div id="github" class="tab-content">
+            <div class="github-section">
+                <h3>🔗 GitHub Integration</h3>
+                <p>Sync your progress to GitHub and showcase your DSA journey!</p>
+                
+                <div class="github-form" style="margin-top: 20px;">
+                    <input type="text" id="githubUsername" placeholder="GitHub Username">
+                    <input type="password" id="githubToken" placeholder="Personal Access Token">
+                    <input type="text" id="githubRepo" placeholder="Repository Name">
+                    <button class="btn btn-secondary" onclick="setupGithub()">Setup GitHub</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📤 Sync to GitHub</h3>
+                <p>Create a beautiful README showcasing your solved problems.</p>
+                <button class="btn" onclick="syncToGithub()">Sync Now</button>
+                <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
+            </div>
+            
+            <div class="card">
+                <h3>📥 Import Data</h3>
+                <p>Import your existing problem data from a JSON file.</p>
+                <input type="file" id="importFile" accept=".json" style="margin-bottom: 15px;">
+                <button class="btn btn-secondary" onclick="importData()">Import Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
